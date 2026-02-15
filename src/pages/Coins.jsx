@@ -60,16 +60,14 @@ const Coins = () => {
         <Loader />
       ) : (
         <>
-        <RadioGroup value={currency} onChange={setcurrency} p={"8"}>
-          <HStack spacing={"4"}>
-            <Radio value={"inr"}>INR</Radio>
-            <Radio value={"usd"}>USD</Radio>
-            <Radio value={"eur"}>EUR</Radio>
-          </HStack>
-        </RadioGroup>
-
-
-          <HStack wrap={"wrap"}>
+          <RadioGroup value={currency} onChange={setcurrency} p={"8"} >
+            <HStack spacing={"4"} justifyContent={["center","flex-start"]}>
+              <Radio value={"inr"}>INR</Radio>
+              <Radio value={"usd"}>USD</Radio>
+              <Radio value={"eur"}>EUR</Radio>
+            </HStack>
+          </RadioGroup>
+          <HStack wrap={"wrap"} justifyContent={"space-evenly"}>
             {coins.map(function (elem) {
               return (
                 <CoinCard
@@ -88,11 +86,12 @@ const Coins = () => {
             {btn.map(function (elem, idx) {
               return (
                 <Button
+                  key={idx + 1}
                   bgColor={useColorModeValue("blackAlpha.900", "white")}
-                  onClick={() => changePage(idx+1)}
+                  onClick={() => changePage(idx + 1)}
                 >
                   <Text color={useColorModeValue("white", "blackAlpha.900")}>
-                    {idx+1}
+                    {idx + 1}
                   </Text>
                 </Button>
               );

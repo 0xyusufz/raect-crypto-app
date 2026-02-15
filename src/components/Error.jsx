@@ -1,12 +1,23 @@
-import React from 'react'
-import {Box,Heading} from '@chakra-ui/react'
+import React from "react";
+import { Alert, AlertIcon, Box, Heading } from "@chakra-ui/react";
 
-const Error = ({message}) => {
+const Error = ({ message }) => {
   return (
-    <Box w={"full"} flex={"1"} bgColor={"red"}>
-        <Heading size={"xl"}>{message}</Heading>
-    </Box>
-  )
-}
+    <Alert
+      status={"error"}
+      position={"fixed"}
+      bottom={"4"}
+      left={"50%"}
+      transform={"translateX(-50%)"}
+      w={"container.lg"}
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
+      <AlertIcon />
+      {message}
+    </Alert>
+  );
+};
 
-export default Error
+export default Error;
