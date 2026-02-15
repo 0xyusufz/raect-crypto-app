@@ -9,7 +9,9 @@ import {
   Heading,
   Text,
   Button,
-  useColorModeValue
+  useColorModeValue,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/react";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
@@ -25,12 +27,12 @@ const Coins = () => {
   const currencySymbol =
     currency === "inr" ? "₹" : currency === "eur" ? "€" : "$";
 
+  const changePage = (page) => {
+    setpage(page);
+    setloading(true);
+  };
 
-
-  const changePage =(page)=>{
-    setpage(page)
-    setloading(true)
-  }
+  const btn = new Array(132).fill(1);
 
   useEffect(() => {
     const fetchCoin = async () => {
@@ -39,7 +41,6 @@ const Coins = () => {
           `${server}/coins/markets?vs_currency=${currency}&page=${page}`
         );
         console.log(data);
-
         setcoins(data);
         setloading(false);
       } catch (e) {
@@ -49,7 +50,6 @@ const Coins = () => {
     };
     fetchCoin();
   }, [currency, page]);
-
   if (error) {
     return <Error message={"Error while fetching coins"} />;
   }
@@ -60,6 +60,15 @@ const Coins = () => {
         <Loader />
       ) : (
         <>
+        <RadioGroup value={currency} onChange={setcurrency} p={"8"}>
+          <HStack spacing={"4"}>
+            <Radio value={"inr"}>INR</Radio>
+            <Radio value={"usd"}>USD</Radio>
+            <Radio value={"eur"}>EUR</Radio>
+          </HStack>
+        </RadioGroup>
+
+
           <HStack wrap={"wrap"}>
             {coins.map(function (elem) {
               return (
@@ -75,11 +84,19 @@ const Coins = () => {
               );
             })}
           </HStack>
-
-          <HStack>
-            <Button bgColor={useColorModeValue("blackAlpha.900","white")} onClick={()=>changePage(2)}>
-              <Text color={useColorModeValue("white","blackAlpha.900")}>2</Text>
-              </Button>
+          <HStack w={"full"} overflowX={"auto"} p={"8"} gap={"2"}>
+            {btn.map(function (elem, idx) {
+              return (
+                <Button
+                  bgColor={useColorModeValue("blackAlpha.900", "white")}
+                  onClick={() => changePage(idx+1)}
+                >
+                  <Text color={useColorModeValue("white", "blackAlpha.900")}>
+                    {idx+1}
+                  </Text>
+                </Button>
+              );
+            })}
           </HStack>
         </>
       )}
