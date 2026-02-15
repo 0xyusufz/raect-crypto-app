@@ -1,17 +1,17 @@
 import React from 'react'
-import {Button, HStack} from '@chakra-ui/react'
+import { HStack, useColorModeValue ,Button} from "@chakra-ui/react";
 import {Link} from 'react-router-dom'
 
 const Header = () => {
   return (
-    <HStack p={"4"} shadow={"base"} bgColor={"blackAlpha.900"}>
-      <Button variant={"unstyled"} color={"white"}>
+    <HStack p={"4"} shadow={"base"} bgColor={useColorModeValue("white", "blackAlpha.900")}>
+      <Button variant={"unstyled"} color={useColorModeValue("blackAlpha.900","white")}>
         <Link to={"/"}>Home</Link>
       </Button>
-      <Button variant={"unstyled"} color={"white"}>
+      <Button variant={"unstyled"} color={useColorModeValue("blackAlpha.900","white")}>
         <Link to={"/exchange"}>exchange</Link>
       </Button>
-      <Button variant={"unstyled"} color={"white"}>
+      <Button variant={"unstyled"} color={useColorModeValue("blackAlpha.900","white")}>
         <Link to={"/coins"}>Coins</Link>
       </Button>
     </HStack>
