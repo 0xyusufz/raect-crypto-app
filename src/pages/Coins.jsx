@@ -4,9 +4,6 @@ import { server } from "../App";
 import {
   Container,
   HStack,
-  VStack,
-  Image,
-  Heading,
   Text,
   Button,
   useColorModeValue,
@@ -26,7 +23,6 @@ const Coins = () => {
 
   const currencySymbol =
     currency === "inr" ? "₹" : currency === "eur" ? "€" : "$";
-
   const changePage = (page) => {
     setpage(page);
     setloading(true);
@@ -60,8 +56,8 @@ const Coins = () => {
         <Loader />
       ) : (
         <>
-          <RadioGroup value={currency} onChange={setcurrency} p={"8"} >
-            <HStack spacing={"4"} justifyContent={["center","flex-start"]}>
+          <RadioGroup value={currency} onChange={setcurrency} p={"8"}>
+            <HStack spacing={"4"} justifyContent={["center", "flex-start"]}>
               <Radio value={"inr"}>INR</Radio>
               <Radio value={"usd"}>USD</Radio>
               <Radio value={"eur"}>EUR</Radio>

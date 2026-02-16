@@ -10,39 +10,38 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Loader from "../components/Loader";
-import { transform } from "framer-motion";
-import Error from '../components/Error'
+import Error from "../components/Error";
 
 const Exchange = () => {
   const [exchanges, setexchanges] = useState([]);
   const [loading, setloading] = useState(true);
-  const [error, seterror] = useState(false)
+  const [error, seterror] = useState(false);
 
   useEffect(() => {
     const fetchEchanges = async () => {
-      try{
+      try {
         const { data } = await axios.get(`${server}/exchanges`);
         setexchanges(data);
         setloading(false);
-      }catch(e){
-        setloading(false)
-        seterror(true)
+      } catch (e) {
+        setloading(false);
+        seterror(true);
       }
     };
     fetchEchanges();
   }, []);
 
-  if(error){
-    return <Error message={"Error while fetching exchanges"} />
+  if (error) {
+    return <Error message={"Error while fetching exchanges"} />;
   }
 
   return (
-    <Container maxW="container.xl" >
+    <Container maxW="container.xl">
       {loading ? (
         <Loader />
       ) : (
         <>
-          <HStack wrap={"wrap"}>
+          <HStack wrap={"wrap"} justify={"space-evenly"}>
             {exchanges.map(function (elem) {
               return (
                 <ExchangeCard
@@ -66,16 +65,26 @@ export default Exchange;
 const ExchangeCard = ({ name, img, rank, url }) => {
   return (
     <a href={url} target={"blank"}>
-      <VStack w={"52"} shadow={"lg"} p={"8"} borderRadius={"lg"} transition={"all 0.3s"} m={"4"} css={{
-        "&:hover":{
-          transform:"scale(1.1)"
-        }
-      }}> 
+      <VStack
+        w={"52"}
+        shadow={"lg"}
+        p={"8"}
+        borderRadius={"lg"}
+        transition={"all 0.3s"}
+        m={"4"}
+        css={{
+          "&:hover": {
+            transform: "scale(1.1)",
+          },
+        }}
+      >
         <Image src={img} w={"10"} h={"10"} objectFit={"contain"} alt={"coin"} />
         <Heading size={"md"} noOfLines={"1"}>
           {rank}
         </Heading>
-        <Text noOfLines={"1"} textAlign={"center"}>{name}</Text>
+        <Text noOfLines={"1"} textAlign={"center"}>
+          {name}
+        </Text>
       </VStack>
     </a>
   );
