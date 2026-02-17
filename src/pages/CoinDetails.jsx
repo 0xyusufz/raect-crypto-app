@@ -68,14 +68,12 @@ const CoinDetails = () => {
               Last Updated on{" "}
               {Date(coins.market_data.last_updated).split("G")[0]}
             </Text>
-
             <Image
               src={coins.image.large}
               w={"16"}
               h={"16"}
               objectFit={"contain"}
             />
-
             <Stat>
               <StatLabel>{coins.name}</StatLabel>
               <StatNumber>2345</StatNumber>
