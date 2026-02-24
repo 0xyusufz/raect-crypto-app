@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { server } from "../App";
 import Error from "../components/Error";
+import Chart from "../components/Chart";
 
 const CoinDetails = () => {
   const param = useParams();
@@ -29,6 +30,8 @@ const CoinDetails = () => {
   const [loading, setloading] = useState(true);
   const [error, seterror] = useState(false);
   const [currency, setcurrency] = useState("inr");
+  const [days, setdays] = useState("24h");
+  const [chartArray, setchartArray] = useState([]);
   const currencySymbol =
     currency === "inr" ? "₹" : currency === "eur" ? "€" : "$";
 
@@ -36,8 +39,11 @@ const CoinDetails = () => {
     const fetchCoinDetails = async () => {
       try {
         const { data } = await axios.get(`${server}/coins/${param.id}`);
-        console.log(data);
+        const { data: chartData } = await axios.get(
+          `${server}/coins/${param.id}/market_chart?vs_currency=${currency}&days=${days}`
+        );
         setcoins(data);
+        setchartArray(chartData.prices);
         setloading(false);
       } catch (e) {
         setloading(false);
@@ -49,7 +55,6 @@ const CoinDetails = () => {
   if (error) {
     return <Error message={"Error while fetching coins"} />;
   }
-
   return (
     <Container maxW={"container.xl"}>
       {loading ? (
@@ -57,9 +62,9 @@ const CoinDetails = () => {
       ) : (
         <>
           <Box w={"full"} borderWidth={"1"}>
-            erfgr4
+            <Chart currency={currencySymbol} arr={chartArray} days={days} />
           </Box>
-          {/* button */}
+          
           <RadioGroup value={currency} onChange={setcurrency} p={"8"}>
             <HStack spacing={"4"} justifyContent={["center", "flex-start"]}>
               <Radio value={"inr"}>INR</Radio>
@@ -95,7 +100,6 @@ const CoinDetails = () => {
                 {coins.market_data.price_change_percentage_24h}%
               </StatHelpText>
             </Stat>
-
             <Badge
               fontSize={"2xl"}
               bgColor={useColorModeValue(["blackAlpha.900", "white"])}
