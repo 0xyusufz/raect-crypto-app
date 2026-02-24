@@ -20,7 +20,6 @@ const Coins = () => {
   const [error, seterror] = useState(false);
   const [page, setpage] = useState(1);
   const [currency, setcurrency] = useState("inr");
-
   const currencySymbol =
     currency === "inr" ? "₹" : currency === "eur" ? "€" : "$";
   const changePage = (page) => {
