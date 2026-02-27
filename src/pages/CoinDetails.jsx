@@ -16,6 +16,7 @@ import {
   Badge,
   useColorModeValue,
   Progress,
+  Button,
 } from "@chakra-ui/react";
 import Loader from "../components/Loader";
 import { useParams } from "react-router-dom";
@@ -35,6 +36,48 @@ const CoinDetails = () => {
   const currencySymbol =
     currency === "inr" ? "₹" : currency === "eur" ? "€" : "$";
 
+  const btns = ["24h", "7d", "14d", "30d", "60d", "200d", "1y", "max"];
+  let switchchartstats = (key) => {
+    switch (key) {
+      case "24h":
+        setdays("24h");
+        setloading(true);
+        break;
+      case "7d":
+        setdays("7d");
+        setloading(true);
+        break;
+      case "14d":
+        setdays("14d");
+        setloading(true);
+        break;
+      case "30d":
+        setdays("30d");
+        setloading(true);
+        break;
+      case "60d":
+        setdays("60d");
+        setloading(true);
+        break;
+      case "200d":
+        setdays("200d");
+        setloading(true);
+        break;
+      case "1y":
+        setdays("365d");
+        setloading(true);
+        break;
+      case "max":
+        setdays("max");
+        setloading(true);
+        break;
+      default:
+        setdays("24h");
+        setloading(true);
+        break;
+    }
+  };
+
   useEffect(() => {
     const fetchCoinDetails = async () => {
       try {
@@ -51,7 +94,7 @@ const CoinDetails = () => {
       }
     };
     fetchCoinDetails();
-  }, [param.id]);
+  }, [param.id, currency, days]);
   if (error) {
     return <Error message={"Error while fetching coins"} />;
   }
@@ -64,7 +107,15 @@ const CoinDetails = () => {
           <Box w={"full"} borderWidth={"1"}>
             <Chart currency={currencySymbol} arr={chartArray} days={days} />
           </Box>
-          
+          <HStack p={"4"} overflowX={"auto"}>
+            {btns.map((elem) => {
+              return (
+                <Button key={elem} onClick={() => switchchartstats(elem)}>
+                  {elem}
+                </Button>
+              );
+            })}
+          </HStack>
           <RadioGroup value={currency} onChange={setcurrency} p={"8"}>
             <HStack spacing={"4"} justifyContent={["center", "flex-start"]}>
               <Radio value={"inr"}>INR</Radio>
