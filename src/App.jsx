@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import Exchange from './pages/Exchange'
 import Coins from './pages/Coins'
 import CoinDetails from './pages/CoinDetails'
+import Footer from './components/Footer'
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
         <Route path='/coins' element={<Coins />}/>
         <Route path='/coins/:id' element={<CoinDetails />}/>
       </Routes>
+    <Footer />
     </BrowserRouter>
   )
 }
